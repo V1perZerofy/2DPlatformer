@@ -1,11 +1,13 @@
-function loadMap()
+local mapName = ""
+function loadMap(pMapName)
+    mapName = pMapName
     gameMap = sti('maps/Level1.lua')
     loadWalls()
 end
 
 function loadWalls()
-    if gameMap.layers["Walls"] then
-        for i, obj in pairs(gameMap.layers["Walls"].objects) do
+    if gameMap.layers["Platforms"] then
+        for i, obj in pairs(gameMap.layers["Platforms"].objects) do
             local wall
             if obj.shape == "rectangle" then
                 wall = world:newRectangleCollider(obj.x, obj.y, obj.width, obj.height)
@@ -23,10 +25,13 @@ function loadWalls()
         end
     end
 end
+function drawBeforePlayer()
+    if gameMap.layers["Background"] then
+        gameMap:drawLayer(gameMap.layers["Background"])
+    end
+end
 
 function drawMapLayers()
-    love.graphics.setBackgroundColor(1,1,0)
-    gameMap:drawLayer(gameMap.layers["Background"])
-    gameMap:drawLayer(gameMap.layers["Water"])
-    gameMap:drawLayer(gameMap.layers["Foreground"])
+    gameMap:drawLayer(gameMap.layers["Foreground1"])
+    gameMap:drawLayer(gameMap.layers["Foreground2"])
 end
